@@ -7,6 +7,8 @@ var district = "区";
 var temperature = "体温";  //引号内填入体温
 var i = 14;  //需使用布局范围分析中的depth数值，更换手机后数值会改变，故需要配合autojs自行填入
              //只需分析选项前的圆圈即可
+var b = 1;   //填表成功则微信通知，值为1开启，0关闭
+var r = http.get("https:xxxxxxx");   //填入server醤的地址
 
 //以下请勿随意改动
 var choice=className("android.view.View").depth(i);
@@ -35,13 +37,13 @@ function Fill()
     Do("点击加载更多");
     toast("即将填写今日所在省市");
     text("请选择省或海外").findOnce(0).click();  
-    Do("province");
+    Do(province);
     Do("确认");
     Do("请选择市或洲");
-    Do("city");
+    Do(city);
     Do("确认");
     Do("请选择区/县或者国家");
-    Do("district");
+    Do(district);
     Do("确认");
     toast("即将填写第12题");
     choice.findOnce(26).click(); //同上一条注释
@@ -54,7 +56,13 @@ function Fill()
     Do("提交");
     }
 Fill();  //脚本执行
-toast("运行成功，即将关闭今日校园");
+toast("填写成功，推送通知");
 sleep("1000");
+if(b=1){
+  console.show();
+  log("code = "+r.statusCode);
+  log("html = "+r.body.string());
+}
+toast("正在退出");
 back();back();back();back();  //关闭今日校园
 exit();
